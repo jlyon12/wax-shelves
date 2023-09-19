@@ -7,7 +7,8 @@
 		"devstart": "nodemon ./bin/www",
 		"serverstart": "DEBUG=wax-shelves:* npm run devstart",
 		"lint": "eslint . --ext js --report-unused-disable-directives --max-warnings 0",
-		"lint:fix": "eslint --fix . --ext js --report-unused-disable-directives --max-warnings 0"
+		"lint:fix": "eslint --fix . --ext js --report-unused-disable-directives --max-warnings 0",
+		"tailwind": "postcss public/stylesheets/tailwind.css -o public/stylesheets/style.css --watch"
 	},
 	"dependencies": {
 		"cookie-parser": "~1.4.4",
@@ -18,12 +19,16 @@
 		"morgan": "~1.9.1"
 	},
 	"devDependencies": {
+		"autoprefixer": "^10.4.15",
 		"eslint": "^8.49.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-import": "^2.28.1",
 		"eslint-plugin-n": "^16.1.0",
 		"eslint-plugin-promise": "^6.1.1",
-		"nodemon": "^3.0.1"
+		"nodemon": "^3.0.1",
+		"postcss": "^8.4.30",
+		"postcss-cli": "^10.1.0",
+		"tailwindcss": "^3.3.3"
 	}
 }

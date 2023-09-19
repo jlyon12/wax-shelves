@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
+/* Redirect to Collection page on GET index */
 router.get('/', function (req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.redirect('/collection');
 });
 
 module.exports = router;

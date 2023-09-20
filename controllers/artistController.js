@@ -7,13 +7,14 @@ exports.artist_create_get = asyncHandler(async (req, res, next) => {
 	res.render('artist_form', {
 		title: 'Create Artist',
 		artist: undefined,
+		errors: undefined,
 	});
 });
 
 exports.artist_create_post = [
 	body('name', 'Artist name can not be empty')
 		.trim()
-		.isLength({ minLength: 1 })
+		.isLength({ min: 1 })
 		.escape(),
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
@@ -23,6 +24,7 @@ exports.artist_create_post = [
 			res.render('artist_form', {
 				title: 'Create Artist',
 				artist: artist,
+				errors: errors.array(),
 			});
 		} else {
 			const artistExists = await Artist.findOne({ name: req.body.name })

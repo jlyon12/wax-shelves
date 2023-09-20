@@ -1,4 +1,5 @@
 const Genre = require('../models/genre');
+const Record = require('../models/record');
 const asyncHandler = require('express-async-handler');
 
 exports.genre_create_get = asyncHandler(async (req, res, next) => {
@@ -25,7 +26,23 @@ exports.genre_edit_post = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - POST on genre_edit');
 });
 exports.genre_detail = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on genre_detail');
+	const [genre, recordsInGenre] = await Promise.all([
+		Genre.findById(req.params.id).exec(),
+		Record.find({ genre: req.params.id })
+			.populate('artist')
+			.sort({ title: 1 })
+			.exec(),
+	]);
+	if (genre == null) {
+		const err = new Error('Genre not found');
+		err.status = 404;
+		return next(err);
+	}
+	res.render('genre_detail', {
+		title: 'Genre',
+		genre: genre,
+		genre_records: recordsInGenre,
+	});
 });
 
 exports.genre_list = asyncHandler(async (req, res, next) => {

@@ -3,7 +3,10 @@ const Record = require('../models/record');
 const asyncHandler = require('express-async-handler');
 
 exports.genre_create_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on genre_create');
+	res.render('genre_form', {
+		title: 'Create Genre',
+		genre: undefined,
+	});
 });
 
 exports.genre_create_post = asyncHandler(async (req, res, next) => {

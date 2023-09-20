@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Wax Shelf | <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <aside class="bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
+        <h1 class="font-bold text-3xl text-indigo-400 m-4 text-center ">
+            Wax Shelf
+        </h1>
+        <nav
+            class="grid grid-flow-col gap-4 p-4 justify-content-center  mb-6 sm:justify-content-start sm:grid-flow-row">
+
+            <ul class="flex flex-col gap-2 ">
+                <h2 class="font-bold text-xl text-indigo-400">View</h2>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection">Summary</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/records">Records</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/artists">Artists</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/genres">Genres</a>
+            </ul>
+            <hr class="bg-indigo-500 h-px  border-0 hidden sm:block">
+            <ul class="flex flex-col gap-2 ">
+                <h2 class="font-bold text-xl text-indigo-400">Create</h2>
+
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/record/create">New
+                    Record</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/artist/create">New
+                    Artist</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection/genre/create">New
+                    Genre</a>
+            </ul>
+        </nav>
+    </aside>
+    <main class="p-4 flex-1 ">
+        <h3 class="font-bold text-3xl text-indigo-400">
+            <%= title %>
+        </h3>
+        <section class=" flex gap-4">
+            <form action="" method="POST" class="bg-slate-900 grid gap-6 m-8 rounded-lg text-lg mx-auto ">
+                <fieldset class="flex flex-col m-8 gap-6">
+                    <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Genre</p>
+                        <input id=" name" type="text" placeholder="Jazz" value="<%= !genre ? '' : genre.name %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                </fieldset>
+                <button type="submit"
+                    class="bg-indigo-600 text-stone-100 py-1 px-2 w-fit mb-8 mx-auto rounded-md hover:bg-indigo-400">Add
+                    Genre</button>
+            </form>
+
+        </section>
+    </main>
+</body>
+
+</html>

@@ -46,19 +46,28 @@
             <%= title %> | <%=genre.name%>
         </h3>
         <section class="p-8 grid gap-4">
+            <% if (genre_records.length===0 ){%>
+                <div class="bg-slate-900 p-4 rounded-md text-lg">
+                    <p> There are no records available for <%=genre.name %>.</p>
+                    <p class="inline-block">You can add a new record by
+                        visiting <a href='/collection/record/create'
+                            class="font-bold text-indigo-400 hover:text-slate-100">
+                            Create Record</a></p>
+                </div>
+                <% } %>
 
-            <% genre_records.forEach((record)=> { %>
-                <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
-                    active:bg-slate-800 focus:bg-slate-800 ">
-                    <p>
-                        <%=record.title%>
-                    </p>
-                    <p class="font-bold text-indigo-400">
-                        <%=record.artist.name%>
-                    </p>
-                </a>
-                <% }) %>
-                    </div>
+                    <% genre_records.forEach((record)=> { %>
+                        <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                            active:bg-slate-800 focus:bg-slate-800 ">
+                            <p>
+                                <%=record.title%>
+                            </p>
+                            <p class="font-bold text-indigo-400">
+                                <%=record.artist.name%>
+                            </p>
+                        </a>
+                        <% }) %>
+
 
         </section>
     </main>

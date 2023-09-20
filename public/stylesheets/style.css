@@ -1997,6 +1997,9 @@ video {
 .hover\:font-bold:hover {
   font-weight: 700;
 }
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
 .before\:hover\:text-center:hover::before {
   content: var(--tw-content);
   text-align: center;

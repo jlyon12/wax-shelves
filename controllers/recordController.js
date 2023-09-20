@@ -42,7 +42,15 @@ exports.record_edit_post = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - POST on record_edit');
 });
 exports.record_detail = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on record_detail');
+	const record = await Record.findById(req.params.id)
+		.populate('artist')
+		.populate('genre')
+		.exec();
+
+	res.render('record_detail', {
+		title: 'Record',
+		record: record,
+	});
 });
 
 exports.record_list = asyncHandler(async (req, res, next) => {

@@ -51,13 +51,20 @@
                     <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
                         <p class="text-xl">Genre</p>
                         <input id="name" name="name" type="text" placeholder="Jazz"
-                            value="<%= !genre ? '' : genre.name %>"
+                            value="<%= !genre ? '' : genre.name %>" required
                             class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                     </label>
                 </fieldset>
-                <button type="submit"
-                    class="bg-indigo-600 text-stone-100 py-1 px-2 w-fit mb-8 mx-auto rounded-md hover:bg-indigo-400">Add
-                    Genre</button>
+                <%if (errors) { %>
+                    <% errors.forEach((err)=> { %>
+                        <p class="text-red-400 mx-8">
+                            <%=err.msg%>
+                        </p>
+                        <% }) %>
+                            <% } %>
+                                <button type="submit"
+                                    class="bg-indigo-600 text-stone-100 py-1 px-2 w-fit mb-8 mx-auto rounded-md hover:bg-indigo-400">Add
+                                    Genre</button>
             </form>
 
         </section>

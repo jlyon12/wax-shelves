@@ -7,13 +7,14 @@ exports.genre_create_get = asyncHandler(async (req, res, next) => {
 	res.render('genre_form', {
 		title: 'Create Genre',
 		genre: undefined,
+		errors: undefined,
 	});
 });
 
 exports.genre_create_post = [
-	body('name', 'Genre name must be at least 3 characters long')
+	body('name', 'Genre must contain at least 3 characters')
 		.trim()
-		.isLength({ minLength: 3 })
+		.isLength({ min: 3 })
 		.escape(),
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
@@ -23,6 +24,7 @@ exports.genre_create_post = [
 			res.render('genre_form', {
 				title: 'Create Genre',
 				genre: genre,
+				errors: errors.array(),
 			});
 		} else {
 			const genreExists = await Genre.findOne({ name: req.body.name })

@@ -1,14 +1,13 @@
 const Artist = require('../models/artist');
 const Record = require('../models/record');
-
 const asyncHandler = require('express-async-handler');
+const { body, validationResult } = require('express-validator');
 
 exports.artist_create_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on artist_create');
-});
-
-exports.artist_create_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on artist_create');
+	res.render('artist_form', {
+		title: 'Create Artist',
+		artist: undefined,
+	});
 });
 
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {

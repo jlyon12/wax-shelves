@@ -1,7 +1,21 @@
+const Record = require('../models/record');
+const Genre = require('../models/genre');
+const Artist = require('../models/artist');
 const asyncHandler = require('express-async-handler');
 
 exports.index = asyncHandler(async (req, res, next) => {
-	res.render('index', { title: 'Wax Shelf' });
+	const [recordCount, artistCount, genreCount] = await Promise.all([
+		Record.countDocuments({}).exec(),
+		Artist.countDocuments({}).exec(),
+		Genre.countDocuments({}).exec(),
+	]);
+
+	res.render('index', {
+		title: 'Summary',
+		recordCount: recordCount,
+		artistCount: artistCount,
+		genreCount: genreCount,
+	});
 });
 
 exports.record_create_get = asyncHandler(async (req, res, next) => {

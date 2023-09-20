@@ -7,7 +7,7 @@ const ArtistSchema = new Schema({
 });
 
 ArtistSchema.virtual('url').get(function () {
-	return `/collection/${this._id}`;
+	return `/collection/artist/${this._id}`;
 });
 
 module.exports = mongoose.model('Artist', ArtistSchema);

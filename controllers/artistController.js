@@ -1,3 +1,4 @@
+const Artist = require('../models/artist');
 const asyncHandler = require('express-async-handler');
 
 exports.artist_create_get = asyncHandler(async (req, res, next) => {
@@ -28,5 +29,10 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.artist_list = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on artist_list');
+	const allArtists = await Artist.find({}, 'name').sort({ name: 1 }).exec();
+
+	res.render('artist_list', {
+		title: 'All Artists',
+		artist_list: allArtists,
+	});
 });

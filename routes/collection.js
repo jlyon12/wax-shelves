@@ -23,7 +23,7 @@ router.get('/record/:id/edit', recordController.record_edit_get);
 // POST request for editing a record
 router.post('/record/:id/edit', recordController.record_edit_post);
 // GET request for single record detail
-router.get('/record/:id/detail', recordController.record_detail);
+router.get('/record/:id/', recordController.record_detail);
 // GET request for list of all records
 router.get('/records', recordController.record_list);
 
@@ -42,7 +42,7 @@ router.get('/artist/:id/edit', artistController.artist_edit_get);
 // POST request for editing a artist
 router.post('/artist/:id/edit', artistController.artist_edit_post);
 // GET request for single artist detail
-router.get('/artist/:id/detail', artistController.artist_detail);
+router.get('/artist/:id/', artistController.artist_detail);
 // GET request for list of all artists
 router.get('/artists', artistController.artist_list);
 
@@ -61,7 +61,7 @@ router.get('/genre/:id/edit', genreController.genre_edit_get);
 // POST request for editing a genre
 router.post('/genre/:id/edit', genreController.genre_edit_post);
 // GET request for single genre detail
-router.get('/genre/:id/detail', genreController.genre_detail);
+router.get('/genre/:id/', genreController.genre_detail);
 // GET request for list of all genres
 router.get('/genres', genreController.genre_list);
 

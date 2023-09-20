@@ -46,5 +46,13 @@ exports.record_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.record_list = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on record_list');
+	const allRecords = await Record.find({}, 'title artist')
+		.sort({ title: 1 })
+		.populate('artist')
+		.exec();
+
+	res.render('record_list', {
+		title: 'All Records',
+		record_list: allRecords,
+	});
 });

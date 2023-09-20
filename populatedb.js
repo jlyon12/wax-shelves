@@ -180,8 +180,8 @@ async function createRecords() {
 			false,
 			[genres[1]]
 		),
-		recordCreate(9, 'Dopesmoker', artists[0], false, false, false, [genres[0]]),
-		recordCreate(10, 'Bitches Brew', artists[0], false, false, false, [
+		recordCreate(9, 'Dopesmoker', artists[8], false, false, false, [genres[0]]),
+		recordCreate(10, 'Bitches Brew', artists[9], false, false, false, [
 			genres[0],
 		]),
 	]);

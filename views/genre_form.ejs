@@ -50,7 +50,8 @@
                 <fieldset class="flex flex-col m-8 gap-6">
                     <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
                         <p class="text-xl">Genre</p>
-                        <input id=" name" type="text" placeholder="Jazz" value="<%= !genre ? '' : genre.name %>"
+                        <input id="name" name="name" type="text" placeholder="Jazz"
+                            value="<%= !genre ? '' : genre.name %>"
                             class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                     </label>
                 </fieldset>

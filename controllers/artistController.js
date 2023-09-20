@@ -1,4 +1,6 @@
 const Artist = require('../models/artist');
+const Record = require('../models/record');
+
 const asyncHandler = require('express-async-handler');
 
 exports.artist_create_get = asyncHandler(async (req, res, next) => {
@@ -25,7 +27,20 @@ exports.artist_edit_post = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - POST on artist_edit');
 });
 exports.artist_detail = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on artist_detail');
+	const [artist, recordsInArtist] = await Promise.all([
+		Artist.findById(req.params.id).exec(),
+		Record.find({ artist: req.params.id }).sort({ title: 1 }).exec(),
+	]);
+	if (artist == null) {
+		const err = new Error('Genre not found');
+		err.status = 404;
+		return next(err);
+	}
+	res.render('artist_detail', {
+		title: 'Artist',
+		artist: artist,
+		artist_records: recordsInArtist,
+	});
 });
 
 exports.artist_list = asyncHandler(async (req, res, next) => {

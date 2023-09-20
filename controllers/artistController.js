@@ -10,6 +10,34 @@ exports.artist_create_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
+exports.artist_create_post = [
+	body('name', 'Artist name can not be empty')
+		.trim()
+		.isLength({ minLength: 1 })
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const artist = new Artist({ name: req.body.name });
+
+		if (!errors.isEmpty()) {
+			res.render('artist_form', {
+				title: 'Create Artist',
+				artist: artist,
+			});
+		} else {
+			const artistExists = await Artist.findOne({ name: req.body.name })
+				.collation({ locale: 'en', strength: 2 })
+				.exec();
+			if (artistExists) {
+				res.redirect(artistExists.url);
+			} else {
+				await artist.save();
+				res.redirect(artist.url);
+			}
+		}
+	}),
+];
+
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - GET on artist_delete');
 });

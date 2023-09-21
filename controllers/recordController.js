@@ -136,6 +136,14 @@ exports.record_edit_get = asyncHandler(async (req, res, next) => {
 		next(err);
 	}
 
+	for (const genre of allGenres) {
+		for (const record_g of record.genre) {
+			if (genre._id.toString() === record_g._id.toString()) {
+				genre.checked = 'true';
+			}
+		}
+	}
+
 	res.render('record_form', {
 		title: 'Edit Record',
 		record: record,

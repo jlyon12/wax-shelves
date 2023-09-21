@@ -101,7 +101,27 @@ exports.record_delete_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.record_delete_post = asyncHandler(async (req, res, next) => {});
+exports.record_delete_post = [
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req, res, next);
+		const record = await Record.findById(req.params.id).exec();
+
+		if (!errors.isEmpty()) {
+			res.render('genre_delete', {
+				title: 'Delete Genre',
+				record: record,
+				errors: errors.array(),
+			});
+		} else {
+			await Record.findByIdAndRemove(req.params.id).exec();
+			res.redirect('/collection/records');
+		}
+	}),
+];
 
 exports.record_edit_get = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - GET on record_edit');

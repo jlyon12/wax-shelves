@@ -35,7 +35,7 @@ exports.record_create_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.record_create_post = [
-	// Concert genre to an array
+	// Convert genre to an array
 	(req, res, next) => {
 		if (!(req.body.genre instanceof Array)) {
 			if (typeof req.body.genre === 'undefined') req.body.genre = [];
@@ -153,9 +153,63 @@ exports.record_edit_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.record_edit_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on record_edit');
-});
+exports.record_edit_post = [
+	// Convert genre to an array
+	(req, res, next) => {
+		if (!(req.body.genre instanceof Array)) {
+			if (typeof req.body.genre === 'undefined') req.body.genre = [];
+			else req.body.genre = new Array(req.body.genre);
+		}
+		next();
+	},
+
+	body('title', 'Title can not be empty').trim().isLength({ min: 1 }).escape(),
+	body('artist', 'Artist can not be empty')
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body('label').trim().escape(),
+	body('cat_number').trim().escape(),
+	body('release_date').trim().escape(),
+	body('genre.*').escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+
+		const record = new Record({
+			title: req.body.title,
+			artist: req.body.artist,
+			label: req.body.label,
+			cat_number: req.body.cat_number,
+			release_date: req.body.release_date,
+			genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
+			_id: req.params.id,
+		});
+
+		if (!errors.isEmpty()) {
+			const [allArtists, allGenres] = await Promise.all([
+				Artist.find({}, 'name').sort({ name: 1 }).exec(),
+				Genre.find({}, 'name').sort({ name: 1 }).exec(),
+			]);
+
+			res.render('record_form', {
+				title: 'Edit Record',
+				record: record,
+				artist_list: allArtists,
+				genre_list: allGenres,
+				errors: errors.array(),
+			});
+		} else {
+			const updatedRecord = await Record.findByIdAndUpdate(
+				req.params.id,
+				record,
+				{}
+			);
+			res.redirect(updatedRecord.url);
+		}
+	}),
+];
+
 exports.record_detail = asyncHandler(async (req, res, next) => {
 	const record = await Record.findById(req.params.id)
 		.populate('artist')

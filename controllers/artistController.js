@@ -41,7 +41,21 @@ exports.artist_create_post = [
 ];
 
 exports.artist_delete_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on artist_delete');
+	const [artist, recordsInArtist] = await Promise.all([
+		Artist.findById(req.params.id).exec(),
+		Record.find({ artist: req.params.id }).sort({ title: 1 }).exec(),
+	]);
+	if (artist == null) {
+		const err = new Error('Artist not found');
+		err.status = 404;
+		return next(err);
+	}
+	res.render('artist_delete', {
+		title: 'Delete',
+		artist: artist,
+		artist_records: recordsInArtist,
+		errors: undefined,
+	});
 });
 
 exports.artist_delete_post = asyncHandler(async (req, res, next) => {
@@ -61,7 +75,7 @@ exports.artist_detail = asyncHandler(async (req, res, next) => {
 		Record.find({ artist: req.params.id }).sort({ title: 1 }).exec(),
 	]);
 	if (artist == null) {
-		const err = new Error('Genre not found');
+		const err = new Error('Artist not found');
 		err.status = 404;
 		return next(err);
 	}

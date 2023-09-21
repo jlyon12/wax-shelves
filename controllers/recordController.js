@@ -87,12 +87,21 @@ exports.record_create_post = [
 ];
 
 exports.record_delete_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on record_delete');
+	const record = await Record.findById(req.params.id)
+		.populate('artist')
+		.populate('genre')
+		.exec();
+	if (record === null) {
+		res.redirect('/collection/records');
+	}
+	res.render('record_delete', {
+		title: 'Delete',
+		record: record,
+		errors: undefined,
+	});
 });
 
-exports.record_delete_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on record_delete');
-});
+exports.record_delete_post = asyncHandler(async (req, res, next) => {});
 
 exports.record_edit_get = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - GET on record_edit');

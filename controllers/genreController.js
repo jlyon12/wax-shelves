@@ -41,7 +41,22 @@ exports.genre_create_post = [
 ];
 
 exports.genre_delete_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on genre_delete');
+	const [genre, recordsInGenre] = await Promise.all([
+		Genre.findById(req.params.id).exec(),
+		Record.find({ genre: req.params.id })
+			.populate('artist')
+			.sort({ title: 1 })
+			.exec(),
+	]);
+	if (genre === null) {
+		res.redirect('collection/genres');
+	}
+	res.render('genre_delete', {
+		title: 'Delete Genre',
+		genre: genre,
+		genre_records: recordsInGenre,
+		errors: undefined,
+	});
 });
 
 exports.genre_delete_post = asyncHandler(async (req, res, next) => {

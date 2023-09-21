@@ -92,7 +92,13 @@ exports.artist_delete_post = [
 ];
 
 exports.artist_edit_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on artist_edit');
+	const artist = await Artist.findById(req.params.id).exec();
+
+	res.render('artist_form', {
+		title: 'Edit Artist',
+		artist: artist,
+		errors: undefined,
+	});
 });
 
 exports.artist_edit_post = asyncHandler(async (req, res, next) => {

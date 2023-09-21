@@ -59,9 +59,41 @@ exports.genre_delete_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.genre_delete_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on genre_delete');
-});
+exports.genre_delete_post = [
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req, res, next);
+		const [genre, recordsInGenre] = await Promise.all([
+			Genre.findById(req.params.id).exec(),
+			Record.find({ genre: req.params.id })
+				.populate('artist')
+				.sort({ title: 1 })
+				.exec(),
+		]);
+
+		if (recordsInGenre.length > 0) {
+			res.render('genre_delete', {
+				title: 'Delete Genre',
+				genre: genre,
+				genre_records: recordsInGenre,
+				errors: undefined,
+			});
+		} else if (!errors.isEmpty()) {
+			res.render('genre_delete', {
+				title: 'Delete Genre',
+				genre: genre,
+				genre_records: recordsInGenre,
+				errors: errors.array(),
+			});
+		} else {
+			await Genre.findByIdAndRemove(req.params.id).exec();
+			res.redirect('/collection/genres');
+		}
+	}),
+];
 
 exports.genre_edit_get = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - GET on genre_edit');

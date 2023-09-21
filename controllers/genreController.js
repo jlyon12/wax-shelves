@@ -96,7 +96,12 @@ exports.genre_delete_post = [
 ];
 
 exports.genre_edit_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on genre_edit');
+	const genre = await Genre.findById(req.params.id).exec();
+	res.render('genre_form', {
+		title: 'Edit Genre',
+		genre: genre,
+		errors: undefined,
+	});
 });
 
 exports.genre_edit_post = asyncHandler(async (req, res, next) => {

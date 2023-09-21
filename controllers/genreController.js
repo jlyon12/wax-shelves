@@ -104,9 +104,32 @@ exports.genre_edit_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.genre_edit_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on genre_edit');
-});
+exports.genre_edit_post = [
+	body('name', 'Genre must contain at least 3 characters')
+		.trim()
+		.isLength({ min: 3 })
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const genre = new Genre({ name: req.body.name, _id: req.params.id });
+
+		if (!errors.isEmpty()) {
+			res.render('genre_form', {
+				title: 'Edit Genre',
+				genre: genre,
+				errors: errors.array(),
+			});
+		} else {
+			const updatedGenre = await Genre.findByIdAndUpdate(
+				req.params.id,
+				genre,
+				{}
+			);
+			res.redirect(updatedGenre.url);
+		}
+	}),
+];
+
 exports.genre_detail = asyncHandler(async (req, res, next) => {
 	const [genre, recordsInGenre] = await Promise.all([
 		Genre.findById(req.params.id).exec(),

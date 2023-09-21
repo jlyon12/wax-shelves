@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Wax Shelf | <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <aside class="bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
+        <h1 class="font-bold text-3xl text-indigo-400 m-4 text-center ">
+            Wax Shelf
+        </h1>
+        <nav
+            class="grid grid-flow-col gap-4 p-4 justify-content-center  mb-6 sm:justify-content-start sm:grid-flow-row">
+
+            <ul class="flex flex-col gap-2 ">
+                <h2 class="font-bold text-xl text-indigo-400">View</h2>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection">Summary</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/records">Records</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/artists">Artists</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/genres">Genres</a>
+            </ul>
+            <hr class="bg-indigo-500 h-px  border-0 hidden sm:block">
+            <ul class="flex flex-col gap-2 ">
+                <h2 class="font-bold text-xl text-indigo-400">Create</h2>
+
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/record/create">New
+                    Record</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/artist/create">New
+                    Artist</a>
+                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection/genre/create">New
+                    Genre</a>
+            </ul>
+        </nav>
+    </aside>
+    <main class="p-4 flex-1 ">
+        <h3 class="font-bold text-3xl text-indigo-400">
+            <%= title %>
+        </h3>
+        <section class=" flex gap-4">
+            <form action="" method="POST" class="bg-slate-900 grid m-8 rounded-lg text-lg mx-auto lg:grid-cols-2">
+                <fieldset class="flex flex-col m-8 gap-6">
+                    <label for="title" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Title</p>
+                        <input id="title" name="title" type="text" placeholder="Daydream Nation"
+                            value="<%= !record ? '' : record.title %>" required
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="artist" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Artist</p>
+                        <select id="artist" name="artist" type="select" placeholder="Select Artist"
+                            value="<%= !record ? '' : record.artist._id %>" required
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                            <% artist_list.forEach((artist)=> { %>
+                                <option value="<%=artist._id%>">
+                                    <%=artist.name%>
+                                </option>
+                                <%})%>
+                        </select>
+                    </label>
+                    <label class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Genre</p>
+                        <div class="grid grid-cols-2 gap-4 text-slate-100">
+                            <% genre_list.forEach((genre)=> { %>
+                                <div class="inline-flex items-center ">
+                                    <label for="<%=genre._id%>"
+                                        class="relative flex cursor-pointer items-center rounded-full p-3">
+                                        <%=genre.name%>
+                                    </label>
+                                    <input id="<%=genre._id%>" value="<%=genre.id%>" type="checkbox"
+                                        class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200
+                                        transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12
+                                        before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0
+                                        before:transition-opacity checked:border-indigo-400 checked:bg-indigo-400 checked:before:bg-indigo-400 hover:before:opacity-10">
+                                </div>
+                                <%})%>
+                        </div>
+
+
+                    </label>
+                </fieldset>
+                <fieldset class="flex flex-col mt-0 lg:mt-8 m-8 gap-6">
+                    <label for="label" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Label</p>
+                        <input id="label" name="label" type="text" placeholder="Goofin' Records"
+                            value="<%= !record ? '' : record.title %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="cat_number" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Catalog Number</p>
+                        <input id="cat_number" name="cat_number" type="text" placeholder="goo-017"
+                            value="<%= !record ? '' : record.cat_number %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="release_date" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Release Date</p>
+                        <input id="release_date" name="release_date" type="date"
+                            value="<%= !record ? '' : record.release_date %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                </fieldset>
+                <%if (errors) { %>
+                    <% errors.forEach((err)=> { %>
+                        <p class="text-red-400 mx-8">
+                            <%=err.msg%>
+                        </p>
+                        <% }) %>
+                            <% } %>
+                                <button type="submit"
+                                    class="bg-indigo-600 text-stone-100 py-1 px-2 w-fit mb-8 mx-auto rounded-md lg:col-span-2 hover:bg-indigo-400">Add
+                                    Record</button>
+            </form>
+
+        </section>
+    </main>
+</body>
+
+</html>

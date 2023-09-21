@@ -19,7 +19,18 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 exports.record_create_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on record_create');
+	const [allArtists, allGenres] = await Promise.all([
+		Artist.find({}, 'name').sort({ name: 1 }).exec(),
+		Genre.find({}, 'name').sort({ name: 1 }).exec(),
+	]);
+
+	res.render('record_form', {
+		title: 'Create Record',
+		record: undefined,
+		artist_list: allArtists,
+		genre_list: allGenres,
+		errors: undefined,
+	});
 });
 
 exports.record_create_post = asyncHandler(async (req, res, next) => {

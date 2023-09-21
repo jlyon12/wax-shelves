@@ -49,10 +49,35 @@ exports.record_create_post = [
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
-	body('label').trim().escape(),
-	body('cat_number').trim().escape(),
-	body('release_date').trim().escape(),
-	body('genre.*').escape(),
+	body('label')
+		.optional({ values: 'undefined' })
+		.trim()
+		.isLength({ min: 1 })
+		.withMessage(
+			'Label is optional. If provided it must contain at least one character.'
+		)
+		.isLength({ max: 30 })
+		.withMessage(
+			'Label is optional. If provided it must contain fewer than 30 characters.'
+		)
+		.escape(),
+	body('cat_number')
+		.optional({ values: 'undefined' })
+		.trim()
+		.isLength({ min: 1 })
+		.withMessage(
+			'Catalog Number is optional. If provided it must contain at least one character.'
+		)
+		.isLength({ max: 30 })
+		.withMessage(
+			'Catalog Number is optional. If provided it must contain fewer than 30 characters.'
+		)
+		.escape(),
+	body('release_date', 'Invalid Release Date')
+		.optional({ values: 'falsy' })
+		.isISO8601()
+		.toDate(),
+	body('genre.*').optional({ values: 'falsy' }).escape(),
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
@@ -168,10 +193,35 @@ exports.record_edit_post = [
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
-	body('label').trim().escape(),
-	body('cat_number').trim().escape(),
-	body('release_date').trim().escape(),
-	body('genre.*').escape(),
+	body('label')
+		.optional({ values: 'undefined' })
+		.trim()
+		.isLength({ min: 1 })
+		.withMessage(
+			'Label is optional. If provided it must contain at least one character.'
+		)
+		.isLength({ max: 30 })
+		.withMessage(
+			'Label is optional. If provided it must contain fewer than 30 characters.'
+		)
+		.escape(),
+	body('cat_number')
+		.optional({ values: 'undefined' })
+		.trim()
+		.isLength({ min: 1 })
+		.withMessage(
+			'Catalog Number is optional. If provided it must contain at least one character.'
+		)
+		.isLength({ max: 30 })
+		.withMessage(
+			'Catalog Number is optional. If provided it must contain fewer than 30 characters.'
+		)
+		.escape(),
+	body('release_date', 'Invalid Release Date')
+		.optional({ values: 'falsy' })
+		.isISO8601()
+		.toDate(),
+	body('genre.*').optional({ values: 'falsy' }).escape(),
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);

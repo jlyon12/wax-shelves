@@ -58,14 +58,21 @@
                     </label>
                     <label for="artist" class="inline-grid gap-4 text-indigo-400 font-semibold ">
                         <p class="text-xl">Artist</p>
-                        <select id="artist" name="artist" type="select" placeholder="Select Artist"
-                            value="<%= !record ? '' : record.artist._id %>" required
+                        <select id="artist" name="artist" type="select" placeholder="Select Artist" required
                             class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                             <% artist_list.forEach((artist)=> { %>
-                                <option value="<%=artist._id%>">
-                                    <%=artist.name%>
-                                </option>
-                                <%})%>
+                                <% if (record) { %>
+                                    <option value="<%=artist._id%>"
+                                        <%=artist._id.toString()===record.artist._id.toString() && "selected" %>
+                                        >
+                                        <%=artist.name%>
+                                    </option>
+                                    <% } else { %>
+                                        <option value="<%=artist._id%>">
+                                            <%=artist.name%>
+                                        </option>
+                                        <% }%>
+                                            <%})%>
                         </select>
                     </label>
                     <label class="inline-grid gap-4 text-indigo-400 font-semibold ">

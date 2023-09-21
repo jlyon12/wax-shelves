@@ -10,8 +10,8 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
-<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
-    <aside class="bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
+<body class="h-screen relative bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <aside class=" bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
         <h1 class="font-bold text-3xl text-indigo-400 m-4 text-center ">
             Wax Shelf
         </h1>
@@ -43,13 +43,13 @@
             </ul>
         </nav>
     </aside>
-    <main class="p-4 flex-1 ">
+    <main class="p-4 flex-1 relative flex flex-col max-h-full overflow-y-auto ">
         <h3 class="font-bold text-3xl text-indigo-400">
             <%= title %>
         </h3>
-        <section class="p-8 grid gap-4">
+        <section class="mx-2 my-4 grid gap-4 overflow-y-auto sm:mx-8 sm:my-8">
             <% genre_list.forEach((genre)=> { %>
-                <a href=<%=genre.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                <a href=<%=genre.url%> class="bg-slate-900 grid p-2 mr-4 rounded-md text-lg hover:bg-slate-800
                     active:bg-slate-800 focus:bg-slate-800 ">
                     <p class="font-bold text-indigo-400">
                         <%=genre.name%>

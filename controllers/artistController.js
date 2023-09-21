@@ -101,9 +101,32 @@ exports.artist_edit_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.artist_edit_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on artist_edit');
-});
+exports.artist_edit_post = [
+	body('name', 'Artist name can not be empty')
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const artist = new Artist({ name: req.body.name, _id: req.params.id });
+
+		if (!errors.isEmpty()) {
+			res.render('artist_form', {
+				title: 'Edit Artist',
+				artist: artist,
+				errors: errors.array(),
+			});
+		} else {
+			const updatedArtist = await Artist.findByIdAndUpdate(
+				req.params.id,
+				artist,
+				{}
+			);
+			res.redirect(updatedArtist.url);
+		}
+	}),
+];
+
 exports.artist_detail = asyncHandler(async (req, res, next) => {
 	const [artist, recordsInArtist] = await Promise.all([
 		Artist.findById(req.params.id).exec(),

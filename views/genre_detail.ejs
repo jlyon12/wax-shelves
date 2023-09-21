@@ -45,7 +45,7 @@
         <h3 class="font-bold text-3xl text-indigo-400">
             <%= title %> | <%=genre.name%>
         </h3>
-        <section class="p-8 grid gap-4">
+        <section class="p-8 grid gap-4 ">
             <% if (genre_records.length===0 ){%>
                 <div class="bg-slate-900 p-4 rounded-md text-lg">
                     <p> There are no records available for <%=genre.name %>.</p>
@@ -68,7 +68,15 @@
                         </a>
                         <% }) %>
 
-
+                            <div class="flex gap-6 mx-auto mt-8">
+                                <button
+                                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
+                                        href="<%=genre.url%>/delete">Delete Genre</a></button>
+                                <button
+                                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
+                                        href="<%=genre.url%>/edit">Edit
+                                        Genre</a></button>
+                            </div>
         </section>
     </main>
 </body>

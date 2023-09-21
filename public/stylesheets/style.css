@@ -587,6 +587,9 @@ video {
 .isolation-auto {
   isolation: auto;
 }
+.col-span-2 {
+  grid-column: span 2 / span 2;
+}
 .float-right {
   float: right;
 }
@@ -634,6 +637,14 @@ video {
   margin-left: auto;
   margin-right: auto;
 }
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+.my-6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -648,6 +659,9 @@ video {
 }
 .mt-8 {
   margin-top: 2rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
 }
 .box-border {
   box-sizing: border-box;

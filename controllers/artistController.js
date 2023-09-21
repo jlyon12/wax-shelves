@@ -58,9 +58,38 @@ exports.artist_delete_get = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.artist_delete_post = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - POST on artist_delete');
-});
+exports.artist_delete_post = [
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+		const [artist, recordsInArtist] = await Promise.all([
+			Artist.findById(req.params.id).exec(),
+			Record.find({ artist: req.params.id }).sort({ title: 1 }).exec(),
+		]);
+
+		if (recordsInArtist.length > 0) {
+			res.render('artist_delete', {
+				title: 'Delete Artist',
+				artist: artist,
+				artist_records: recordsInArtist,
+				errors: undefined,
+			});
+		} else if (!errors.isEmpty()) {
+			res.render('artist_delete', {
+				title: 'Delete Artist',
+				artist: artist,
+				artist_records: recordsInArtist,
+				errors: errors.array(),
+			});
+		} else {
+			await Artist.findByIdAndRemove(req.params.id).exec();
+			res.redirect('/collection/artists');
+		}
+	}),
+];
 
 exports.artist_edit_get = asyncHandler(async (req, res, next) => {
 	res.send('NOT IMPLEMENTED - GET on artist_edit');

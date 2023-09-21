@@ -124,7 +124,25 @@ exports.record_delete_post = [
 ];
 
 exports.record_edit_get = asyncHandler(async (req, res, next) => {
-	res.send('NOT IMPLEMENTED - GET on record_edit');
+	const [allArtists, allGenres, record] = await Promise.all([
+		Artist.find({}, 'name').sort({ name: 1 }).exec(),
+		Genre.find({}, 'name').sort({ name: 1 }).exec(),
+		Record.findById(req.params.id).populate('artist').populate('genre').exec(),
+	]);
+
+	if (record === null) {
+		const err = new Error('Record not found');
+		err.status = 404;
+		next(err);
+	}
+
+	res.render('record_form', {
+		title: 'Edit Record',
+		record: record,
+		artist_list: allArtists,
+		genre_list: allGenres,
+		errors: undefined,
+	});
 });
 
 exports.record_edit_post = asyncHandler(async (req, res, next) => {

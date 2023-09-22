@@ -12,33 +12,41 @@
 
 <body class="h-screen relative bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
     <aside class="bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
-        <h1 class="font-bold text-3xl text-indigo-400 m-4 text-center ">
-            Wax Shelf
-        </h1>
+        <div class="flex items-center justify-center">
+            <img class="h-10 " src="/images/logo_icon.svg" alt="logo icon">
+            <h1 class="font-bold text-3xl text-indigo-400 m-4 text-center ">Wax Shelf</h1>
+        </div>
+        <hr class="bg-indigo-500 h-[2px] border-0 mb-4 sm:mb-2 ">
         <nav
-            class="grid grid-flow-col gap-4 p-4 justify-content-center  mb-6 sm:justify-content-start sm:grid-flow-row">
+            class="grid px-8 gap-6 justify-items-between  mb-6  sm:px-4 sm:py-4 sm:justify-content-start sm:grid-flow-row">
 
-            <ul class="flex flex-col gap-2 ">
-                <h2 class="font-bold text-xl text-indigo-400">View</h2>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection">Summary</a>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
-                    href=" /collection/records">Records</a>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
-                    href=" /collection/artists">Artists</a>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
-                    href=" /collection/genres">Genres</a>
+            <ul class="grid grid-cols-2 gap-8  mx-auto sm:gap-6 sm:grid-cols-1 sm:justify-items-start sm:mx-0">
+                <h2 class="hidden font-bold text-xl text-indigo-400 col-span-2 sm:block sm:col-span-1">Browse</h2>
+                <a class="inline-flex items-center text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection">
+                    <img class="h-6 mr-2" src="/images/summary_icon.svg" alt="summary icon">Summary</a>
+                <a class="inline-flex items-center text-md  hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/records">
+                    <img class="h-6 mr-2" src="/images/vinyl_icon.svg" alt="vinyl icon">Records</a>
+                <a class="inline-flex items-center text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/artists">
+                    <img class="h-6 mr-2" src="/images/artist_icon.svg" alt="artist icon">Artists</a>
+                <a class="inline-flex items-center text-md hover:font-bold active:font-bold focus:font-bold"
+                    href=" /collection/genres">
+                    <img class="h-6 mr-2" src="/images/genre_icon.svg" alt="genre icon">Genres</a>
             </ul>
             <hr class="bg-indigo-500 h-px  border-0 hidden sm:block">
-            <ul class="flex flex-col gap-2 ">
-                <h2 class="font-bold text-xl text-indigo-400">Create</h2>
+            <ul class="flex gap-8  justify-center sm:justify-start sm:grid sm:gap-6">
+                <h2 class=" hidden font-bold text-xl text-indigo-400 col-span-2  sm:block">Create</h2>
 
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
-                    href=" /collection/record/create">New
+                <a class="inline-flex items-center text-md col-span-1 col-start-1 hover:font-bold active:font-bold focus:font-bold "
+                    href=" /collection/record/create"><img class="h-6 mr-2" src="/images/new_icon.svg" alt="new icon">
                     Record</a>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold"
-                    href=" /collection/artist/create">New
+                <a class="inline-flex items-center text-md col-span-1 col-start-1 hover:font-bold active:font-bold focus:font-bold "
+                    href=" /collection/artist/create"><img class="h-6 mr-2" src="/images/new_icon.svg" alt="new icon">
                     Artist</a>
-                <a class="text-md hover:font-bold active:font-bold focus:font-bold" href=" /collection/genre/create">New
+                <a class="inline-flex items-center text-md col-span-1 col-start-1 hover:font-bold active:font-bold focus:font-bold "
+                    href=" /collection/genre/create"><img class="h-6 mr-2" src="/images/new_icon.svg" alt="new icon">
                     Genre</a>
             </ul>
         </nav>

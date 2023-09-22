@@ -50,7 +50,7 @@ exports.record_create_post = [
 		.isLength({ min: 1 })
 		.escape(),
 	body('label')
-		.optional({ values: 'undefined' })
+		.optional({ values: 'falsy' })
 		.trim()
 		.isLength({ min: 1 })
 		.withMessage(
@@ -62,7 +62,7 @@ exports.record_create_post = [
 		)
 		.escape(),
 	body('cat_number')
-		.optional({ values: 'undefined' })
+		.optional({ values: 'falsy' })
 		.trim()
 		.isLength({ min: 1 })
 		.withMessage(
@@ -89,6 +89,7 @@ exports.record_create_post = [
 			cat_number: req.body.cat_number,
 			release_date: req.body.release_date,
 			genre: req.body.genre,
+			date_acquired: req.body.date_acquired,
 		});
 
 		if (!errors.isEmpty()) {
@@ -96,7 +97,13 @@ exports.record_create_post = [
 				Artist.find({}, 'name').sort({ name: 1 }).exec(),
 				Genre.find({}, 'name').sort({ name: 1 }).exec(),
 			]);
-
+			for (const genre of allGenres) {
+				for (const record_g of record.genre) {
+					if (genre._id.toString() === record_g._id.toString()) {
+						genre.checked = 'true';
+					}
+				}
+			}
 			res.render('record_form', {
 				title: 'Create Record',
 				record: record,
@@ -194,7 +201,7 @@ exports.record_edit_post = [
 		.isLength({ min: 1 })
 		.escape(),
 	body('label')
-		.optional({ values: 'undefined' })
+		.optional({ values: 'falsy' })
 		.trim()
 		.isLength({ min: 1 })
 		.withMessage(
@@ -206,7 +213,7 @@ exports.record_edit_post = [
 		)
 		.escape(),
 	body('cat_number')
-		.optional({ values: 'undefined' })
+		.optional({ values: 'falsy' })
 		.trim()
 		.isLength({ min: 1 })
 		.withMessage(
@@ -233,6 +240,7 @@ exports.record_edit_post = [
 			cat_number: req.body.cat_number,
 			release_date: req.body.release_date,
 			genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
+			date_acquired: req.body.date_acquired,
 			_id: req.params.id,
 		});
 
@@ -242,6 +250,13 @@ exports.record_edit_post = [
 				Genre.find({}, 'name').sort({ name: 1 }).exec(),
 			]);
 
+			for (const genre of allGenres) {
+				for (const record_g of record.genre) {
+					if (genre._id.toString() === record_g._id.toString()) {
+						genre.checked = 'true';
+					}
+				}
+			}
 			res.render('record_form', {
 				title: 'Edit Record',
 				record: record,

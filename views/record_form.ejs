@@ -117,10 +117,17 @@
                     <label for="release_date" class="inline-grid gap-4 text-indigo-400 font-semibold ">
                         <p class="text-xl">Release Date</p>
                         <input id="release_date" name="release_date" type="date"
-                            value="<%= !record ? '' : record.release_date %>"
+                            value="<%= !record ? '' : record.release_date_yyyy_mm_dd %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="date_acquired" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Acquired On</p>
+                        <input id="date_acquired" name="date_acquired" type="date"
+                            value="<%= !record ? '' : record.date_acquired_yyyy_mm_dd %>"
                             class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                     </label>
                 </fieldset>
+
                 <%if (errors) { %>
                     <% errors.forEach((err)=> { %>
                         <p class="text-red-400 mb-6 mx-8 lg:col-span-2">

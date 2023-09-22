@@ -41,31 +41,37 @@
     <h3 class="font-bold text-3xl text-indigo-400">
       <%= title %>
     </h3>
-    <section class="p-8 flex flex-col gap-4">
-      <div class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
-        <p class="inline-flex gap-2 font-bold text-indigo-400 ml-auto">
-          Records:
-          <span class="text-indigo-200">
-            <%= recordCount %>
-          </span>
-        </p>
-      </div>
-      <div class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
-        <p class="inline-flex gap-2 font-bold text-indigo-400 ml-auto">
-          Artists:
-          <span class="text-indigo-200">
-            <%= artistCount %>
-          </span>
-        </p>
-      </div>
-      <div class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
+    <section class="p-8 grid md:grid-cols-3 gap-4">
+
+
+      <a href="collection/genres" class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
+        <img class="h-12 mx-auto" src="/images/genre_icon.svg" alt="genre icon">
         <p class="inline-flex gap-2 font-bold text-indigo-400 ml-auto">
           Genres:
           <span class="text-indigo-200">
             <%= genreCount %>
           </span>
         </p>
-      </div>
+      </a>
+      <a href="collection/artists" class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
+        <img class="h-12 mx-auto" src="/images/artist_icon.svg" alt="artist icon">
+        <p class="inline-flex gap-2 font-bold text-indigo-400 ml-auto">
+          Artists:
+          <span class="text-indigo-200">
+            <%= artistCount %>
+          </span>
+        </p>
+      </a>
+
+      <a href="collection/records" class="bg-slate-900 grid gap-8 p-4 place-content-center rounded-md text-lg ">
+        <img class="h-12 mx-auto" src="/images/vinyl_icon.svg" alt="vinyl record icon">
+        <p class="inline-flex gap-2 font-bold text-indigo-400 ml-auto">
+          Records:
+          <span class="text-indigo-200">
+            <%= recordCount %>
+          </span>
+        </p>
+      </a>
     </section>
   </main>
 </body>

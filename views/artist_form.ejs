@@ -10,7 +10,7 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
-<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+<body class="h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
     <aside class="bg-slate-900 text-slate-100 sm:w-[250px] sm:flex-none">
         <div class="flex items-center justify-center">
             <img class="h-10 " src="/images/logo_icon.svg" alt="logo icon">
@@ -51,33 +51,32 @@
             </ul>
         </nav>
     </aside>
-    <main class="p-4 flex-1 grid">
-        <h3 class="font-bold text-3xl text-indigo-400">
-            <%= title %>
-        </h3>
-        <section class="grid auto-rows-min place-items-center">
-            <form action="" method="POST" class="bg-slate-900 grid gap-6 m-8 rounded-lg text-lg  ">
-                <fieldset class="flex flex-col m-8 gap-6">
-                    <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
-                        <p class="text-xl">Artist</p>
-                        <input id="name" name="name" type="text" placeholder="Led Zeppelin" required
-                            value="<%= !artist ? '' : artist.name %>"
-                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
-                    </label>
-                </fieldset>
-                <%if (errors) { %>
-                    <% errors.forEach((err)=> { %>
-                        <p class="text-red-400 mx-auto">
-                            <%=err.msg%>
-                        </p>
-                        <% }) %>
-                            <% } %>
-                                <button type="submit"
-                                    class="bg-indigo-600 text-stone-100 inline-flex py-2 px-4 items-center justify-center text-lg font-bold rounded-md hover:bg-indigo-400">
-                                    <%=title.includes("Edit")? "Edit" : "Create" %>
-                                        Artist
-                                </button>
-            </form>
+    <main class="p-4 grid place-items-center w-full h-full">
+
+        <form action="" method="POST" class="bg-slate-900 grid auto-cols-min gap-6 m-8 p-8 rounded-lg text-lg mx-auto ">
+            <h3 class="font-bold text-2xl text-indigo-400 ">
+                <%=title%>
+            </h3>
+            <fieldset class="flex flex-colgap-6">
+                <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
+                    <input id="name" name="name" type="text" placeholder="Led Zeppelin" required
+                        value="<%= !artist ? '' : artist.name %>"
+                        class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                </label>
+            </fieldset>
+            <%if (errors) { %>
+                <% errors.forEach((err)=> { %>
+                    <p class="text-red-400 mx-auto">
+                        <%=err.msg%>
+                    </p>
+                    <% }) %>
+                        <% } %>
+                            <button type="submit"
+                                class="bg-indigo-600 text-stone-100 inline-flex py-2 px-4 items-center justify-center text-lg font-bold rounded-md hover:bg-indigo-400">
+                                <%=title.includes("Edit")? "Edit" : "Create" %>
+                                    Artist
+                            </button>
+        </form>
 
         </section>
     </main>

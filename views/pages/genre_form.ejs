@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Wax Shelf | <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <%- include('../partials/navbar') %>
+        <main class="p-4 grid place-items-center w-full h-full">
+
+            <form action="" method="POST"
+                class="bg-slate-900 grid auto-cols-min gap-6 m-8 p-8 rounded-lg text-lg mx-auto ">
+                <h3 class="font-bold text-2xl text-indigo-400 ">
+                    <%=title%>
+                </h3>
+                <fieldset class="flex flex-col  gap-6">
+                    <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
+                        <input id="name" name="name" type="text" placeholder="Jazz"
+                            value="<%= !genre ? '' : genre.name %>" required
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                </fieldset>
+                <%if (errors) { %>
+                    <% errors.forEach((err)=> { %>
+                        <p class="text-red-400 mx-8">
+                            <%=err.msg%>
+                        </p>
+                        <% }) %>
+                            <% } %>
+                                <button type="submit"
+                                    class="bg-indigo-600 text-stone-100 inline-flex py-2 px-4 items-center justify-center text-lg font-bold rounded-md hover:bg-indigo-400">
+                                    <%=title.includes("Edit")? "Edit" : "Create" %>
+                                        Genre
+                                </button>
+            </form>
+
+        </main>
+</body>
+
+</html>

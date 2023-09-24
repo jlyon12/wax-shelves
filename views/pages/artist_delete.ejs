@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Wax Shelf | <%= title %> | <%= artist.name %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <%- include('../partials/navbar') %>
+        <main class="p-4 flex-1 ">
+            <h3 class="font-bold text-3xl text-indigo-400">
+                <%= title %> | <%=artist.name%>
+            </h3>
+            <section class="p-8 grid gap-4 ">
+                <% if (artist_records.length===0 ) { %>
+                    <div class="bg-slate-900 p-4 rounded-md text-lg">
+                        <p class="text-rose-500 font-bold"> Are you sure you want to delete <%=artist.name %>?</p>
+                        <p>Provide the admin delete key to proceed.</p>
+                    </div>
+                    <form action="" method="POST" class="bg-slate-900 grid gap-6 m-8 rounded-lg text-lg mx-auto ">
+                        <fieldset class="flex flex-col m-8 gap-6">
+                            <label for="key"
+                                class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
+                                <p class="text-xl">Admin Delete Key</p>
+                                <input id="key" name="key" type="password" value="" required
+                                    class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                            </label>
+                        </fieldset>
+                        <%if (errors) { %>
+                            <% errors.forEach((err)=> { %>
+                                <p class="text-red-400 mx-auto">
+                                    <%=err.msg%>
+                                </p>
+                                <% }) %>
+                                    <% } %>
+                                        <button type="submit"
+                                            class="inline-flex py-2 px-4 items-center justify-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400">
+                                            Delete</button>
+                    </form>
+
+                    <% }else { %>
+                        <div class="bg-slate-900 p-4 rounded-md">
+                            <p class="font-bold text-amber-500 text-lg font-semi-bold">Delete the following records by
+                                <%= artist.name %> before proceeding.
+                            </p>
+                        </div>
+                        <% artist_records.forEach((record)=> { %>
+                            <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                                active:bg-slate-800 focus:bg-slate-800 ">
+                                <p>
+                                    <%=record.title%>
+                                </p>
+                                <p class="font-bold text-indigo-400">
+                                    <%=record.artist.name%>
+                                </p>
+                            </a>
+                            <% }) %>
+
+                                <div class="flex gap-6 mx-auto mt-8">
+                                    <button
+                                        class="inline-flex py-2 px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
+                                            href="<%=artist.url%>/delete">Delete Artist</a></button>
+                                    <button
+                                        class="inline-flex py-2 px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
+                                            href="<%=artist.url%>/edit">Edit
+                                            Artist</a></button>
+                                </div>
+                                <% } %>
+
+            </section>
+        </main>
+</body>
+
+</html>

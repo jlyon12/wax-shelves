@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Wax Shelf | <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <%- include('../partials/navbar') %>
+        <main class="p-4 m-auto grid place-items-center w-full h-full">
+
+            <form action="" method="POST"
+                class="bg-slate-900 grid auto-cols-min m-8 p-8 rounded-lg text-lg mx-auto lg:grid-cols-2">
+                <h3 class="font-bold text-2xl text-indigo-400 col-span-1 lg:col-span-2">
+                    <%= title %>
+                </h3>
+                <fieldset class="flex flex-col my-8 lg:mr-8 gap-6">
+                    <label for="title" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Title</p>
+                        <input id="title" name="title" type="text" placeholder="Daydream Nation"
+                            value="<%= !record ? '' : record.title %>" required
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="artist" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Artist</p>
+                        <select id="artist" name="artist" type="select" placeholder="Select Artist" required
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                            <% artist_list.forEach((artist)=> { %>
+                                <% if (record) { %>
+                                    <option value="<%=artist._id%>"
+                                        <%=artist._id.toString()===record.artist._id.toString() && "selected" %>
+                                        >
+                                        <%=artist.name%>
+                                    </option>
+                                    <% } else { %>
+                                        <option value="<%=artist._id%>">
+                                            <%=artist.name%>
+                                        </option>
+                                        <% }%>
+                                            <%})%>
+                        </select>
+                    </label>
+                    <label class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Genre</p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2  gap-6 text-slate-100">
+                            <% genre_list.forEach((genre)=> { %>
+                                <div class="inline-flex items-center justify-between">
+                                    <label for="<%=genre._id%>"
+                                        class="relative flex flex-1 cursor-pointer items-center rounded-full">
+                                        <%=genre.name%>
+                                    </label>
+                                    <input id="<%=genre._id%>" name="genre" value="<%=genre._id%>" type="checkbox"
+                                        <%=genre.checked && "checked" %>
+                                    class="before:content[''] flex-shrink-0 peer relative h-5 w-5 ml-6 cursor-pointer
+                                    appearance-none
+                                    rounded-md border border-blue-gray-200
+                                    transition-all before:absolute before:top-2/4 before:left-2/4 before:block
+                                    before:h-12 before:w-12
+                                    before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full
+                                    before:bg-blue-gray-500 before:opacity-0
+                                    before:transition-opacity checked:border-indigo-400 checked:bg-indigo-400
+                                    checked:before:bg-indigo-400 hover:before:opacity-10">
+                                </div>
+                                <%})%>
+                        </div>
+
+
+                    </label>
+                </fieldset>
+                <fieldset class="flex flex-col mt-0 lg:mt-8 my-8 lg:ml-8 gap-6">
+                    <label for="label" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Label</p>
+                        <input id="label" name="label" type="text" placeholder="Goofin' Records"
+                            value="<%= !record ? '' : record.label %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="cat_number" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Catalog Number</p>
+                        <input id="cat_number" name="cat_number" type="text" placeholder="goo-017"
+                            value="<%= !record ? '' : record.cat_number %>"
+                            class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="release_date" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Release Date</p>
+                        <input id="release_date" name="release_date" type="date"
+                            value="<%= !record ? '' : record.release_date_yyyy_mm_dd %>"
+                            class="appearance-none h-9  bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="date_acquired" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Acquired On</p>
+                        <input id="date_acquired" name="date_acquired" type="date"
+                            value="<%= !record ? '' : record.date_acquired_yyyy_mm_dd %>"
+                            class=" appearance-none h-9 bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                </fieldset>
+
+                <%if (errors) { %>
+                    <% errors.forEach((err)=> { %>
+                        <p class="text-red-400 mb-6 mx-8 lg:col-span-2">
+                            <%=err.msg%>
+                        </p>
+                        <% }) %>
+                            <% } %>
+                                <button type="submit"
+                                    class="bg-indigo-600 text-stone-100 inline-flex py-2 px-4 items-center justify-center text-lg font-bold rounded-md lg:col-span-2 hover:bg-indigo-400">
+                                    <%=title.includes("Edit")? "Edit" : "Create" %>
+                                        Record
+                                </button>
+            </form>
+
+        </main>
+</body>
+
+</html>

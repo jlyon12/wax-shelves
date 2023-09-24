@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Wax Shelf | <%= title %> | <%= artist.name %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
+    <%- include('../partials/navbar') %>
+        <main class="p-4 flex-1 flex flex-col justify-between">
+            <h3 class="font-bold text-3xl text-indigo-400">
+                <%= title %> | <%=artist.name%>
+            </h3>
+            <section class="p-8 flex-1 flex gap-4 flex-col ">
+                <% if (artist_records.length===0 ){%>
+                    <div class="bg-slate-900 p-4 rounded-md text-lg text-amber-500">
+                        <p> There are no records available for <%=artist.name %>.</p>
+                    </div>
+                    <div class="bg-slate-900 p-4 rounded-md text-lg">
+                        <p class="inline-block">You can add a new record by
+                            visiting <a href='/collection/record/create'
+                                class="font-bold text-indigo-400 hover:text-slate-100">
+                                Create Record</a></p>
+                    </div>
+                    <% } %>
+                        <% artist_records.forEach((record)=> { %>
+                            <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                                active:bg-slate-800 focus:bg-slate-800 ">
+                                <p class="font-bold text-indigo-400">
+                                    <%=record.title%>
+                                </p>
+
+                            </a>
+                            <% }) %>
+                                </div>
+                                <div class="flex gap-6 mx-auto mt-6 sm:mt-auto">
+                                    <button
+                                        class="inline-flex py-2 px-2 sm:px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
+                                            href="<%=artist.url%>/delete">Delete Artist</a></button>
+                                    <button
+                                        class="inline-flex py-2 px-2 sm:px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
+                                            href="<%=artist.url%>/edit">Edit
+                                            Artist</a></button>
+                                </div>
+
+            </section>
+        </main>
+</body>
+
+</html>

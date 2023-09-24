@@ -51,14 +51,16 @@
             </ul>
         </nav>
     </aside>
-    <main class="p-4 flex-1 ">
+    <main class="p-4 flex-1 flex flex-col justify-between">
         <h3 class="font-bold text-3xl text-indigo-400">
             <%= title %> | <%=genre.name%>
         </h3>
-        <section class="p-8 grid gap-4 ">
+        <section class="p-8 flex-1 flex gap-4 flex-col ">
             <% if (genre_records.length===0 ){%>
-                <div class="bg-slate-900 p-4 rounded-md text-lg">
+                <div class="bg-slate-900 p-4 rounded-md text-lg text-amber-500">
                     <p> There are no records available for <%=genre.name %>.</p>
+                </div>
+                <div class="bg-slate-900 p-4 rounded-md text-lg">
                     <p class="inline-block">You can add a new record by
                         visiting <a href='/collection/record/create'
                             class="font-bold text-indigo-400 hover:text-slate-100">
@@ -78,12 +80,12 @@
                         </a>
                         <% }) %>
 
-                            <div class="flex gap-6 mx-auto mt-8">
+                            <div class="flex gap-6 mx-auto mt-6 sm:mt-auto">
                                 <button
-                                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
+                                    class="inline-flex py-2 px-2 sm:px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
                                         href="<%=genre.url%>/delete">Delete Genre</a></button>
                                 <button
-                                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
+                                    class="inline-flex py-2 px-2 sm:px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
                                         href="<%=genre.url%>/edit">Edit
                                         Genre</a></button>
                             </div>

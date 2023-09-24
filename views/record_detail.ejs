@@ -51,27 +51,41 @@
             </ul>
         </nav>
     </aside>
-    <main class="p-4 flex-1 ">
+    <main class="p-4 flex-1 flex flex-col justify-between">
         <h3 class="font-bold text-3xl text-indigo-400">
             <%= title %> | <%=record.title%>
         </h3>
-        <section class="p-8 grid gap-4">
-            <div class="bg-slate-900 grid gap-2 p-4 rounded-md text-lg">
-                <p class="font-bold grid text-indigo-400">
-                    Title:
-                    <span class="text-slate-100">
+        <section class="p-8 flex-1 flex gap-4 flex-col">
+            <div class="bg-slate-900 grid gap-2 p-4 rounded-md text-lg lg:grid-cols-2 ">
+                <p class=" font-bold grid text-indigo-400 ">
+                    Title
+                    <span class=" text-slate-100">
                         <%=record.title%>
                     </span>
 
                 </p>
                 <p class="font-bold grid text-indigo-400">
-                    Artist:
-                    <a href=<%=record.artist.url%> class="text-slate-100 hover:underline">
+                    Artist
+                    <a href=<%=record.artist.url%> class="text-slate-100 hover:underline ">
                         <%=record.artist.name%>
                     </a>
                 </p>
                 <p class="font-bold grid text-indigo-400">
-                    Genres:
+                    Label
+                    <span class="text-slate-100">
+                        <%=record.label%>
+                    </span>
+                </p>
+
+                <p class="font-bold grid text-indigo-400">
+                    Catalog Number
+                    <span class="text-slate-100">
+                        <%=record.cat_number%>
+                    </span>
+                </p>
+
+                <p class="font-bold grid text-indigo-400">
+                    Genres
                     <% record.genre.forEach((val,index)=> {%>
                         <a href=<%=val.url%> class="text-slate-100 hover:underline">
                             <%=val.name%>
@@ -79,36 +93,25 @@
                         <% }) %>
                 </p>
                 <p class="font-bold grid text-indigo-400">
-                    Release Date:
+                    Release Date
                     <span class="text-slate-100">
                         <%=record.release_date_formatted%>
                     </span>
                 </p>
+
                 <p class="font-bold grid text-indigo-400">
-                    Label:
-                    <span class="text-slate-100">
-                        <%=record.label%>
-                    </span>
-                </p>
-                <p class="font-bold grid text-indigo-400">
-                    Catalog Number:
-                    <span class="text-slate-100">
-                        <%=record.cat_number%>
-                    </span>
-                </p>
-                <p class="font-bold grid text-indigo-400">
-                    Added to Collection:
+                    Added to Collection
                     <span class="text-slate-100">
                         <%=record.date_acquired_formatted%>
                     </span>
                 </p>
             </div>
-            <div class="flex gap-6 mx-auto mt-8">
+            <div class="flex gap-6 mx-auto mt-6 sm:mt-auto ">
                 <button
-                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
+                    class="inline-flex py-2  px-2 sm:px-4 items-center text-lg font-bold bg-rose-500 rounded-md hover:bg-rose-400"><a
                         href="<%=record.url%>/delete">Delete Record</a></button>
                 <button
-                    class="inline-flex py-2 px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
+                    class="inline-flex py-2 px-2 sm:px-4 items-center text-lg font-bold bg-sky-500 rounded-md hover:bg-sky-400"><a
                         href="<%=record.url%>/edit">Edit
                         Record</a></button>
             </div>

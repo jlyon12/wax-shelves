@@ -312,7 +312,7 @@ exports.record_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.record_list = asyncHandler(async (req, res, next) => {
-	const allRecords = await Record.find({}, 'title artist')
+	const allRecords = await Record.find({}, 'title artist imgURL')
 		.sort({ title: 1 })
 		.populate('artist')
 		.exec();

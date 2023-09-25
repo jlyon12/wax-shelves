@@ -29,8 +29,13 @@
                     </div>
                     <% } %>
                         <% artist_records.forEach((record)=> { %>
-                            <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                            <a href=<%=record.url%> class="bg-slate-900 flex gap-4 items-center p-4 rounded-md text-lg
+                                hover:bg-slate-800
                                 active:bg-slate-800 focus:bg-slate-800 ">
+                                <div class=" aspect-square max-h-12 md:max-h-16 "><img src=<%=record.imgURL ?
+                                        record.imgURL : '/images/vinyl_icon.svg' %> alt=""
+                                    class="object-cover rounded-sm ">
+                                </div>
                                 <p class="font-bold text-indigo-400">
                                     <%=record.title%>
                                 </p>

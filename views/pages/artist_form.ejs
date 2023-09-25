@@ -19,16 +19,24 @@
                 <h3 class="font-bold text-2xl text-indigo-400 ">
                     <%=title%>
                 </h3>
-                <fieldset class="flex flex-colgap-6">
+                <fieldset class="flex flex-col gap-6">
                     <label for="name" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
                         <input id="name" name="name" type="text" placeholder="Led Zeppelin" required
                             value="<%= !artist ? '' : artist.name %>"
                             class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                     </label>
+                    <% if (title.includes('Edit')) { %>
+                        <label for="key" class="inline-grid gap-4 text-amber-500 font-semibold">
+                            <p class="text-xl">Admin Password</p>
+
+                            <input id="key" name="key" type="password" value="" required
+                                class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                        </label>
+                        <% } %>
                 </fieldset>
                 <%if (errors) { %>
                     <% errors.forEach((err)=> { %>
-                        <p class="text-red-400 mx-auto">
+                        <p class="text-red-400 text-center mx-auto">
                             <%=err.msg%>
                         </p>
                         <% }) %>

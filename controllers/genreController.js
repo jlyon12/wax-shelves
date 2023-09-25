@@ -109,6 +109,10 @@ exports.genre_edit_post = [
 		.trim()
 		.isLength({ min: 3 })
 		.escape(),
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 		const genre = new Genre({ name: req.body.name, _id: req.params.id });

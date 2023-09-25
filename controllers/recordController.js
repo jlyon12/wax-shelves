@@ -229,6 +229,10 @@ exports.record_edit_post = [
 		.isISO8601()
 		.toDate(),
 	body('genre.*').optional({ values: 'falsy' }).escape(),
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);

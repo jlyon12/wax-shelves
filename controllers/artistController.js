@@ -106,6 +106,10 @@ exports.artist_edit_post = [
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
+	body('key', 'Invalid authentication')
+		.trim()
+		.matches(process.env.INTERNAL_ADMIN_KEY)
+		.escape(),
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 		const artist = new Artist({ name: req.body.name, _id: req.params.id });

@@ -97,11 +97,19 @@
                             value="<%= !record ? '' : record.date_acquired_yyyy_mm_dd %>"
                             class=" appearance-none h-9 bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                     </label>
+                    <% if (title.includes('Edit')) { %>
+                        <label for="key" class="inline-grid gap-4 text-amber-500 font-semibold">
+                            <p class="text-xl">Admin Password</p>
+
+                            <input id="key" name="key" type="password" value="" required
+                                class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                        </label>
+                        <% } %>
                 </fieldset>
 
                 <%if (errors) { %>
                     <% errors.forEach((err)=> { %>
-                        <p class="text-red-400 mb-6 mx-8 lg:col-span-2">
+                        <p class="text-red-400 mb-6 text-center mx-auto lg:col-span-2">
                             <%=err.msg%>
                         </p>
                         <% }) %>

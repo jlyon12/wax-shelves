@@ -20,19 +20,19 @@
 
                 <div class="bg-slate-900 p-4 rounded-md text-lg">
                     <p class="text-rose-500 font-bold"> Are you sure you want to delete <%=record.title %>?</p>
-                    <p>Provide the admin delete key to proceed.</p>
                 </div>
-                <form action="" method="POST" class="bg-slate-900 grid gap-6 m-8 rounded-lg text-lg mx-auto ">
-                    <fieldset class="flex flex-col m-8 gap-6">
-                        <label for="key" class="inline-grid items-center mx-auto gap-4 text-indigo-400 font-semibold ">
-                            <p class="text-xl">Admin Delete Key</p>
+                <form action="" method="POST"
+                    class="bg-slate-900 grid auto-cols-min gap-6 m-8 p-8 rounded-lg text-lg mx-auto">
+                    <fieldset class="flex flex-col gap-6">
+                        <label for="key" class="inline-grid items-center mx-auto gap-4 text-amber-500 font-semibold ">
+                            <p class="text-xl">Admin Password</p>
                             <input id="key" name="key" type="password" value="" required
                                 class="bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
                         </label>
                     </fieldset>
                     <%if (errors) { %>
                         <% errors.forEach((err)=> { %>
-                            <p class="text-red-400 mx-auto">
+                            <p class="text-red-400 mx-auto text-center">
                                 <%=err.msg%>
                             </p>
                             <% }) %>

@@ -14,7 +14,7 @@
     <%- include('../partials/navbar') %>
         <main class="p-4 m-auto grid place-items-center w-full h-full">
 
-            <form action="" method="POST"
+            <form action="" method="POST" enctype="multipart/form-data"
                 class="bg-slate-900 grid auto-cols-min m-8 p-8 rounded-lg text-lg mx-auto lg:grid-cols-2">
                 <h3 class="font-bold text-2xl text-indigo-400 col-span-1 lg:col-span-2">
                     <%= title %>
@@ -96,6 +96,10 @@
                         <input id="date_acquired" name="date_acquired" type="date"
                             value="<%= !record ? '' : record.date_acquired_yyyy_mm_dd %>"
                             class=" appearance-none h-9 bg-slate-700 text-slate-100 py-1 px-2 rounded-md">
+                    </label>
+                    <label for="uploaded_cover" class="inline-grid gap-4 text-indigo-400 font-semibold ">
+                        <p class="text-xl">Album Art</p>
+                        <input type="file" name="uploaded_cover" />
                     </label>
                     <% if (title.includes('Edit')) { %>
                         <label for="key" class="inline-grid gap-4 text-amber-500 font-semibold">

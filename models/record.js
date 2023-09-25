@@ -11,6 +11,7 @@ const RecordSchema = new Schema({
 	release_date: { type: Date },
 	genre: [{ type: Schema.Types.ObjectId, ref: 'Genre' }],
 	date_acquired: { type: Date, default: Date.now },
+	imgURL: { type: String },
 });
 
 RecordSchema.virtual('url').get(function () {

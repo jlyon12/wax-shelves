@@ -1,8 +1,24 @@
 const Record = require('../models/record');
 const Genre = require('../models/genre');
 const Artist = require('../models/artist');
+const { extname } = require('path');
+const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		const des = 'public/data/uploads/';
+		fs.mkdirSync(des, { recursive: true });
+		cb(null, des);
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.fieldname + '-' + uuidv4() + extname(file.originalname));
+	},
+});
+const upload = multer({ storage: storage });
 
 exports.index = asyncHandler(async (req, res, next) => {
 	const [recordCount, artistCount, genreCount] = await Promise.all([
@@ -43,6 +59,7 @@ exports.record_create_post = [
 		}
 		next();
 	},
+	upload.single('uploaded_cover'),
 
 	body('title', 'Title can not be empty').trim().isLength({ min: 1 }).escape(),
 	body('artist', 'Artist can not be empty')
@@ -81,7 +98,7 @@ exports.record_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
-
+		console.log(req.file);
 		const record = new Record({
 			title: req.body.title,
 			artist: req.body.artist,
@@ -90,6 +107,7 @@ exports.record_create_post = [
 			release_date: req.body.release_date,
 			genre: req.body.genre,
 			date_acquired: req.body.date_acquired,
+			imgURL: `/data/uploads/${req.file.filename}`,
 		});
 
 		if (!errors.isEmpty()) {
@@ -194,6 +212,7 @@ exports.record_edit_post = [
 		}
 		next();
 	},
+	upload.single('uploaded_cover'),
 
 	body('title', 'Title can not be empty').trim().isLength({ min: 1 }).escape(),
 	body('artist', 'Artist can not be empty')
@@ -245,6 +264,7 @@ exports.record_edit_post = [
 			release_date: req.body.release_date,
 			genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
 			date_acquired: req.body.date_acquired,
+			imgURL: `/data/uploads/${req.file.filename}`,
 			_id: req.params.id,
 		});
 

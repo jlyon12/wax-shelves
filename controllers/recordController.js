@@ -107,7 +107,7 @@ exports.record_create_post = [
 			release_date: req.body.release_date,
 			genre: req.body.genre,
 			date_acquired: req.body.date_acquired,
-			imgURL: `/data/uploads/${req.file.filename}`,
+			imgURL: !req.file ? '' : `/data/uploads/${req.file.filename}`,
 		});
 
 		if (!errors.isEmpty()) {
@@ -255,6 +255,7 @@ exports.record_edit_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
+		const oldRecord = await Record.findById(req.params.id).exec();
 
 		const record = new Record({
 			title: req.body.title,

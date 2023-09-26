@@ -2,6 +2,7 @@ const Record = require('../models/record');
 const Genre = require('../models/genre');
 const Artist = require('../models/artist');
 const { extname } = require('path');
+const path = require('path');
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
 const asyncHandler = require('express-async-handler');
@@ -256,6 +257,15 @@ exports.record_edit_post = [
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 		const oldRecord = await Record.findById(req.params.id).exec();
+		// Is there a new album art uploaded for this record?
+		// Did album art already exist?
+		// If both true, delete the old album art file from storage and only maintain the new file in storage.
+		if (req.file && oldRecord.imgURL) {
+			fs.unlink(path.join(__dirname, '../public', oldRecord.imgURL), (err) => {
+				if (err) throw err;
+				console.log('Album art was deleted');
+			});
+		}
 
 		const record = new Record({
 			title: req.body.title,

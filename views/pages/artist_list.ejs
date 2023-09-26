@@ -8,11 +8,13 @@
         Wax Shelf | <%= title %>
     </title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script defer src="/javascripts/menu.js"></script>
+
 </head>
 
 <body class="h-screen relative bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
     <%- include('../partials/navbar') %>
-        <main class="p-4 flex-1 relative flex flex-col max-h-full overflow-y-auto">
+        <main class="p-4 flex-1 relative flex flex-col max-h-full overflow-y-auto sm:blur-0">
             <h3 class="font-bold text-3xl text-indigo-400">
                 <%= title %>
             </h3>

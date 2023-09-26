@@ -8,11 +8,13 @@
         Wax Shelf | <%= title %>
     </title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script defer src="/javascripts/menu.js"></script>
+
 </head>
 
 <body class="min-h-screen bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
     <%- include('../partials/navbar') %>
-        <main class="p-4 m-auto grid place-items-center w-full h-full">
+        <main class="p-4 m-auto grid place-items-center w-full h-full sm:blur-0">
 
             <form action="" method="POST" enctype="multipart/form-data"
                 class="bg-slate-900 grid auto-cols-min m-8 p-8 rounded-lg text-lg mx-auto lg:grid-cols-2">

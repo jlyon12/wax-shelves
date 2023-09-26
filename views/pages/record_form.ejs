@@ -101,7 +101,8 @@
                     </label>
                     <label for="uploaded_cover" class="inline-grid gap-4 text-indigo-400 font-semibold ">
                         <p class="text-xl">Album Art</p>
-                        <input type="file" name="uploaded_cover" class=" text-md text-slate-100 " />
+                        <input type="file" name="uploaded_cover" accept=".jpg, .jpeg, .png"
+                            class=" text-md text-slate-500 appearance-none  overflow-hidden " />
                     </label>
                     <% if (title.includes('Edit')) { %>
                         <label for="key" class="inline-grid gap-4 text-amber-500 font-semibold ">

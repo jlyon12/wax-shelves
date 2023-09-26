@@ -265,7 +265,9 @@ exports.record_edit_post = [
 			release_date: req.body.release_date,
 			genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
 			date_acquired: req.body.date_acquired,
-			imgURL: `/data/uploads/${req.file.filename}`,
+			imgURL: !req.file
+				? oldRecord.imgURL
+				: `/data/uploads/${req.file.filename}`,
 			_id: req.params.id,
 		});
 

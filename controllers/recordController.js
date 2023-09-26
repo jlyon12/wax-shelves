@@ -112,6 +112,13 @@ exports.record_create_post = [
 		});
 
 		if (!errors.isEmpty()) {
+			// If there are errors, delete the file uploaded before validation ran.
+			if (req.file) {
+				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
+					if (err) throw err;
+					console.log('Form errors! User uploaded file deleted successfully.');
+				});
+			}
 			const [allArtists, allGenres] = await Promise.all([
 				Artist.find({}, 'name').sort({ name: 1 }).exec(),
 				Genre.find({}, 'name').sort({ name: 1 }).exec(),
@@ -282,6 +289,13 @@ exports.record_edit_post = [
 		});
 
 		if (!errors.isEmpty()) {
+			// If there are errors, delete the file uploaded before validation ran.
+			if (req.file) {
+				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
+					if (err) throw err;
+					console.log('Form errors! User uploaded file deleted successfully.');
+				});
+			}
 			const [allArtists, allGenres] = await Promise.all([
 				Artist.find({}, 'name').sort({ name: 1 }).exec(),
 				Genre.find({}, 'name').sort({ name: 1 }).exec(),

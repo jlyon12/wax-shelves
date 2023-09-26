@@ -32,14 +32,22 @@
                     <% } %>
 
                         <% genre_records.forEach((record)=> { %>
-                            <a href=<%=record.url%> class="bg-slate-900 grid p-4 rounded-md text-lg hover:bg-slate-800
+                            <a href=<%=record.url%> class="bg-slate-900 flex items-center p-4 gap-4 mr-4 rounded-md
+                                text-lg
+                                hover:bg-slate-800
                                 active:bg-slate-800 focus:bg-slate-800 ">
-                                <p>
-                                    <%=record.title%>
-                                </p>
-                                <p class="font-bold text-indigo-400">
-                                    <%=record.artist.name%>
-                                </p>
+                                <div class=" aspect-square max-h-12 md:max-h-16 "><img src=<%=record.imgURL ?
+                                        record.imgURL : '/images/vinyl_icon.svg' %> alt=""
+                                    class="object-cover rounded-sm ">
+                                </div>
+                                <div>
+                                    <p>
+                                        <%=record.title%>
+                                    </p>
+                                    <p class="font-bold text-indigo-400">
+                                        <%=record.artist.name%>
+                                    </p>
+                                </div>
                             </a>
                             <% }) %>
 

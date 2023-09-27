@@ -4,10 +4,10 @@
 
 The project brief is found <a href="https://www.theodinproject.com/lessons/nodejs-inventory-application">here</a>.
 
-<!-- ## Getting Started
+## Getting Started
 
-<a href="" target="_blank"> Live Link </a> 👈🏻
-<br/> -->
+<a href="https://wax-shelves.fly.dev" target="_blank"> Live Link </a> 👈🏻
+<br/>
 
 ## License
 

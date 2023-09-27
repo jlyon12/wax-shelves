@@ -94,7 +94,6 @@ exports.index = asyncHandler(async (req, res, next) => {
 		topGenres: topGenres,
 		recentRecords: recentRecords,
 	});
-	console.log(recentRecords);
 });
 
 exports.record_create_get = asyncHandler(async (req, res, next) => {
@@ -160,7 +159,6 @@ exports.record_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
-		console.log(req.file);
 		const record = new Record({
 			title: req.body.title,
 			artist: req.body.artist,
@@ -177,7 +175,6 @@ exports.record_create_post = [
 			if (req.file) {
 				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
 					if (err) throw err;
-					console.log('Form errors! User uploaded file deleted successfully.');
 				});
 			}
 			const [allArtists, allGenres] = await Promise.all([
@@ -331,7 +328,6 @@ exports.record_edit_post = [
 		if (req.file && oldRecord.imgURL) {
 			fs.unlink(path.join(__dirname, '../public', oldRecord.imgURL), (err) => {
 				if (err) throw err;
-				console.log('Album art was deleted');
 			});
 		}
 
@@ -354,7 +350,6 @@ exports.record_edit_post = [
 			if (req.file) {
 				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
 					if (err) throw err;
-					console.log('Form errors! User uploaded file deleted successfully.');
 				});
 			}
 			const [allArtists, allGenres] = await Promise.all([

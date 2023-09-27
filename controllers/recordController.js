@@ -22,18 +22,79 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 exports.index = asyncHandler(async (req, res, next) => {
-	const [recordCount, artistCount, genreCount] = await Promise.all([
+	const [
+		recordCount,
+		artistCount,
+		genreCount,
+		topArtists,
+		topGenres,
+		recentRecords,
+	] = await Promise.all([
 		Record.countDocuments({}).exec(),
 		Artist.countDocuments({}).exec(),
 		Genre.countDocuments({}).exec(),
+		Record.aggregate([
+			{
+				$lookup: {
+					from: 'artists',
+					localField: 'artist',
+					foreignField: '_id',
+					as: 'artist',
+				},
+			},
+			{
+				$unwind: {
+					path: '$artist',
+					includeArrayIndex: 'string',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
+			{
+				$sortByCount: '$artist',
+			},
+			{
+				$limit: 5,
+			},
+		]),
+		Record.aggregate([
+			{
+				$lookup: {
+					from: 'genres',
+					localField: 'genre',
+					foreignField: '_id',
+					as: 'genre',
+				},
+			},
+			{
+				$unwind: {
+					path: '$genre',
+					includeArrayIndex: 'string',
+					preserveNullAndEmptyArrays: true,
+				},
+			},
+			{
+				$sortByCount: '$genre',
+			},
+			{
+				$limit: 5,
+			},
+		]),
+		Record.find({})
+			.populate('artist')
+			.sort({ date_acquired: -1 })
+			.limit(5)
+			.exec(),
 	]);
-
 	res.render('index', {
-		title: 'Summary',
+		title: 'Collection',
 		recordCount: recordCount,
 		artistCount: artistCount,
 		genreCount: genreCount,
+		topArtists: topArtists,
+		topGenres: topGenres,
+		recentRecords: recentRecords,
 	});
+	console.log(recentRecords);
 });
 
 exports.record_create_get = asyncHandler(async (req, res, next) => {

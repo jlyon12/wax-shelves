@@ -9,15 +9,21 @@
   </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <script defer src="/javascripts/menu.js"></script>
+  <script defer src="/javascripts/toggleStats.js"></script>
 </head>
 
 <body class="min-h-screen  bg-slate-950 text-slate-100 flex flex-col sm:flex-row">
   <%- include('../partials/navbar') %>
     <main class="p-4 flex-1 sm:blur-0">
-      <h3 class="font-bold text-3xl text-indigo-400">
-        <%= title %>
-      </h3>
-      <section class="p-8 grid md:grid-cols-3  gap-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-3xl text-indigo-400">
+          <%= title %>
+        </h3><button id="toggleStats" class="inline-flex gap-2 items-center flex-row-reverse"><img id="toggleStatsIcon"
+            class="h-10 -rotate-90" src="/images/up_chevron.svg" alt="Toggle Stats Button"><span id="toggleStatsText"
+            class="font-bold hover:text-indigo-400 focus:text-indigo-400 active:text-indigo-400">View
+            Stats</span></button>
+      </div>
+      <section class="p-8 grid  lg:grid-cols-3 gap-4 ">
 
 
 
@@ -51,32 +57,40 @@
             </span>
           </p>
         </a>
-        <div class="md:col-start-2 md:col-span-2    md:row-start-1 md:row-end-4">
+        <div id="statsContainer"
+          class="invisible overflow-hidden relative max-h-0 opacity-0 grid gap-4 transition-all ease-in-out  duration-500 ">
 
-          <div class="text-center grid gap-2 m-4 text-md md:text-right md:text-lg ">
-            <p class="font-bold text-indigo-400 text-lg md:text-xl ">Top Genres</p>
+          <div class=" grid gap-2  text-md lg:text-right md:text-lg ">
+            <p class="font-bold text-indigo-400 text-lg md:text-2xl ">Top Genres</p>
             <% topGenres.forEach(result=> { %>
               <a href="/collection/genre/<%=result._id._id%>"
-                class="w-fit  mx-auto md:mx-0 md:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
+                class="w-fit   lg:mx-0 lg:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
                 <%=result._id.name%>
+                  <span class=" text-indigo-300">
+                    <%=result.count%>
+                  </span>
               </a>
               <%})%>
           </div>
-          <div class="text-center grid gap-2 m-4 text-md md:text-right md:text-lg ">
-            <p class="font-bold text-indigo-400 text-lg md:text-xl ">Top Artists</p>
+          <div class=" grid gap-2  text-md lg:text-right md:text-lg ">
+            <p class="font-bold text-indigo-400 text-lg md:text-2xl ">Top Artists</p>
             <% topArtists.forEach(result=> { %>
               <a href="/collection/artist/<%=result._id._id%>"
-                class="w-fit  mx-auto md:mx-0 md:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
-                <%=result._id.name%>
+                class="w-fit   lg:mx-0 lg:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
+                <%=result._id.name%> <span class=" text-indigo-300">
+                    <%=result.count%>
+                  </span>
               </a>
               <%})%>
           </div>
-          <div class="text-center grid gap-2 m-4 text-md md:text-right md:text-lg ">
-            <p class="font-bold text-indigo-400 text-lg md:text-xl">Recently Added</p>
+          <div class=" grid gap-2  text-md lg:text-right md:text-lg ">
+            <p class="font-bold text-indigo-400 text-lg md:text-2xl">Recently Added</p>
             <% recentRecords.forEach(result=> { %>
               <a href="/collection/record/<%=result._id%>"
-                class="w-fit  mx-auto md:mx-0 md:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
-                <%=result.title%> - <%=result.artist.name%>
+                class="w-fit   lg:mx-0 lg:justify-self-end hover:underline hover:text-indigo-200 active:underline active:text-indigo-200 focus:underline focus:text-indigo-200">
+                <%=result.title%> - <span class=" text-indigo-300">
+                    <%=result.artist.name%>
+                  </span>
               </a>
 
               <%})%>

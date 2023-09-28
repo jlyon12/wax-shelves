@@ -46,7 +46,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 				$unwind: {
 					path: '$artist',
 					includeArrayIndex: 'string',
-					preserveNullAndEmptyArrays: true,
+					preserveNullAndEmptyArrays: false,
 				},
 			},
 			{
@@ -69,7 +69,7 @@ exports.index = asyncHandler(async (req, res, next) => {
 				$unwind: {
 					path: '$genre',
 					includeArrayIndex: 'string',
-					preserveNullAndEmptyArrays: true,
+					preserveNullAndEmptyArrays: false,
 				},
 			},
 			{

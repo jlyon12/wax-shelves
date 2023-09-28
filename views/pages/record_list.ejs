@@ -25,12 +25,12 @@
                         text-lg
                         hover:bg-slate-800
                         active:bg-slate-800 focus:bg-slate-800 ">
-                        <div class=" aspect-square max-h-12 md:max-h-16 "><img src=<%=record.imgURL ? record.imgURL
-                                : '/images/vinyl_icon.svg' %> alt=""
+                        <div class=" aspect-square flex-shrink-0 max-h-12 md:max-h-16 "><img src=<%=record.imgURL ?
+                                record.imgURL : '/images/vinyl_icon.svg' %> alt=""
                             class="object-cover rounded-sm ">
                         </div>
                         <div>
-                            <p>
+                            <p class="overflow-x-clip">
                                 <%=record.title%>
                             </p>
                             <p class="font-bold text-indigo-400">

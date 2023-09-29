@@ -1,6 +1,4 @@
 #! /usr/bin/env node
-/* eslint-disable object-shorthand */
-/* eslint-disable camelcase */
 // This script has been modified from the original script provided by the MDN project
 // source article: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
 // source code: https://raw.githubusercontent.com/mdn/express-locallibrary-tutorial/main/populatedb.js

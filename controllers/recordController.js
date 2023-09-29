@@ -1,24 +1,26 @@
 const Record = require('../models/record');
 const Genre = require('../models/genre');
 const Artist = require('../models/artist');
-const { extname } = require('path');
-const path = require('path');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
 
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 const multer = require('multer');
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		const des = 'public/data/uploads/';
-		fs.mkdirSync(des, { recursive: true });
-		cb(null, des);
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.fieldname + '-' + uuidv4() + extname(file.originalname));
+const storage = new CloudinaryStorage({
+	cloudinary: cloudinary,
+	params: {
+		folder: 'Wax_Shelves',
 	},
 });
+
 const upload = multer({ storage: storage });
 
 exports.index = asyncHandler(async (req, res, next) => {
@@ -158,6 +160,7 @@ exports.record_create_post = [
 	body('genre.*').optional({ values: 'falsy' }).escape(),
 
 	asyncHandler(async (req, res, next) => {
+		console.log(req.file);
 		const errors = validationResult(req);
 		const record = new Record({
 			title: req.body.title,
@@ -167,15 +170,13 @@ exports.record_create_post = [
 			release_date: req.body.release_date,
 			genre: req.body.genre,
 			date_acquired: req.body.date_acquired,
-			imgURL: !req.file ? '' : `/data/uploads/${req.file.filename}`,
+			imgURL: !req.file ? '' : req.file.path,
 		});
 
 		if (!errors.isEmpty()) {
 			// If there are errors, delete the file uploaded before validation ran.
 			if (req.file) {
-				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
-					if (err) throw err;
-				});
+				cloudinary.uploader.destroy(req.file.filename);
 			}
 			const [allArtists, allGenres] = await Promise.all([
 				Artist.find({}, 'name').sort({ name: 1 }).exec(),
@@ -233,6 +234,13 @@ exports.record_delete_post = [
 				errors: errors.array(),
 			});
 		} else {
+			// Did record have album art? If true, delete it.
+			const imgUrlSplit = record.imgURL.split('/');
+			const imgPublicId = imgUrlSplit
+				.slice([imgUrlSplit.length - 2])
+				.join('/')
+				.split('.')[0];
+			cloudinary.uploader.destroy(imgPublicId);
 			await Record.findByIdAndRemove(req.params.id).exec();
 			res.redirect('/collection/records');
 		}
@@ -322,14 +330,6 @@ exports.record_edit_post = [
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 		const oldRecord = await Record.findById(req.params.id).exec();
-		// Is there a new album art uploaded for this record?
-		// Did album art already exist?
-		// If both true, delete the old album art file from storage and only maintain the new file in storage.
-		if (req.file && oldRecord.imgURL) {
-			fs.unlink(path.join(__dirname, '../public', oldRecord.imgURL), (err) => {
-				if (err) throw err;
-			});
-		}
 
 		const record = new Record({
 			title: req.body.title,
@@ -339,18 +339,14 @@ exports.record_edit_post = [
 			release_date: req.body.release_date,
 			genre: typeof req.body.genre === 'undefined' ? [] : req.body.genre,
 			date_acquired: req.body.date_acquired,
-			imgURL: !req.file
-				? oldRecord.imgURL
-				: `/data/uploads/${req.file.filename}`,
+			imgURL: !req.file ? oldRecord.imgURL : req.file.path,
 			_id: req.params.id,
 		});
 
 		if (!errors.isEmpty()) {
 			// If there are errors, delete the file uploaded before validation ran.
 			if (req.file) {
-				fs.unlink(path.join(__dirname, '..', req.file.path), (err) => {
-					if (err) throw err;
-				});
+				cloudinary.uploader.destroy(req.file.filename);
 			}
 			const [allArtists, allGenres] = await Promise.all([
 				Artist.find({}, 'name').sort({ name: 1 }).exec(),
@@ -372,6 +368,17 @@ exports.record_edit_post = [
 				errors: errors.array(),
 			});
 		} else {
+			// Is there a new album art uploaded for this record?
+			// Did album art already exist?
+			// If both true, delete the old album art file from storage and only maintain the new file in storage.
+			if (req.file && oldRecord.imgURL) {
+				const imgUrlSplit = oldRecord.imgURL.split('/');
+				const imgPublicId = imgUrlSplit
+					.slice([imgUrlSplit.length - 2])
+					.join('/')
+					.split('.')[0];
+				cloudinary.uploader.destroy(imgPublicId);
+			}
 			const updatedRecord = await Record.findByIdAndUpdate(
 				req.params.id,
 				record,

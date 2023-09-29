@@ -5,6 +5,10 @@ module.exports = {
 		node: true,
 	},
 	extends: ['standard', 'prettier'],
+	rules: {
+		'object-shorthand': 'off',
+		camelcase: 'warn',
+	},
 	overrides: [
 		{
 			env: {
@@ -19,5 +23,4 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 'latest',
 	},
-	rules: {},
 };

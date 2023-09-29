@@ -39,7 +39,14 @@ const limiter = RateLimit({
 
 app.use(limiter);
 app.use(compression());
-app.use(helmet());
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			'script-src': ["'self'"],
+			'img-src': ["'self'", 'res.cloudinary.com'],
+		},
+	})
+);
 
 app.use('/', indexRouter);
 app.use('/collection', collectionRouter);

@@ -34,9 +34,9 @@
                             <a href=<%=record.url%> class="bg-slate-900 flex gap-4 items-center p-4 rounded-md text-lg
                                 hover:bg-slate-800
                                 active:bg-slate-800 focus:bg-slate-800 ">
-                                <div class=" aspect-square flex-shrink-0 max-h-12 md:max-h-16 "><img
+                                <div class=" flex aspect-square flex-shrink-0 max-h-12 md:max-h-16 "><img
                                         src=<%=record.imgURL ? record.imgURL : '/images/vinyl_icon.svg' %> alt=""
-                                    class="object-cover rounded-sm ">
+                                    class="object-cover rounded-sm w-full">
                                 </div>
                                 <p class="font-bold text-indigo-400">
                                     <%=record.title%>
